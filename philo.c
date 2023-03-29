@@ -6,7 +6,7 @@
 /*   By: werrahma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:16:16 by werrahma          #+#    #+#             */
-/*   Updated: 2023/03/28 17:05:27 by werrahma         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:56:15 by werrahma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,43 @@
 
 void    *ft(void *lo)
 {
-	// pthread_mutex_lock(&lock1);
+	int i = 0;
 	t_list *list;
 	list = (t_list*)lo;
-	pthread_mutex_lock(&list->lock[0]);
-	pthread_mutex_lock(&list->lock[1]);
-	unsigned long i = 0;
 	static int count;
+		// usleep(100);
 	
-	count += 1;
-	printf("philo %d is start eating\n", count);
-    usleep(100000);
-	// while(i < 10000000)
-	//     i++;
-	printf("philo %d is finish\n", count);
-	pthread_mutex_unlock(&list->lock[0]);
-	pthread_mutex_unlock(&list->lock[1]);
+	while(1)
+	{
+		// printf("id : %d\n", list->id);
+		pthread_mutex_lock(&list->lock[0]);
+		pthread_mutex_lock(&list->lock[1]);
+		// usleep(100000);
+		// count += 1;
+		// printf("id = %lu\n", list[i].id);
+		// if(list[i].id == 0)
+		printf("philo %lu is start eating\n", list->id);
+		usleep(1000);
+		// if(list[i].id == 0)
+			printf("philo %lu is finish\n", list->id);
+		pthread_mutex_unlock(&list->lock[0]);
+		pthread_mutex_unlock(&list->lock[1]);
+	}
 	return(0);
 }
 
 int main(int ac, char **av)
 {
-    t_list list;
-    list.fork = ft_atoi(av[1]);
-	list.t_die = ft_atoi(av[2]);
-	list.t_eat = ft_atoi(av[3]);
-	list.t_sleep = ft_atoi(av[4]);
+    t_list **list;
+	list = malloc(sizeof(t_list*)*ft_atoi(av[1]));
+	for (int i =0; i < ft_atoi(av[1]); i++)
+	{
+		list[i] = malloc(sizeof(t_list));
+		list[i]->fork = ft_atoi(av[1]);
+		list[i]->t_die = ft_atoi(av[2]);
+		list[i]->t_eat = ft_atoi(av[3]);
+		list[i]->t_sleep = ft_atoi(av[4]);
+	}
     // pthread_mutex_t *lock;
 	pthread_t t1[2];
 	// pthread_t t2;
@@ -50,18 +61,28 @@ int main(int ac, char **av)
 	int philo;
 	
 	philo = ft_atoi(av[1]);
-	list.lock = malloc(sizeof (pthread_mutex_t) *(list.fork));
     int g= 0;
-	while(i < fork)
+	while(i < (*list)->fork)
     {
-        pthread_mutex_init(&list.lock[i++], NULL);
+		list[i]->lock = malloc(sizeof (pthread_mutex_t) * 2);
+        pthread_mutex_init(&list[i]->lock[0], NULL);
+        pthread_mutex_init(&list[i]->lock[1], NULL);
+		i++;
     }
     i = 0;
-    if(!list.lock)
+    if(!(*list)->lock)
         return(0);
+	while(i < (*list)->fork)
+	{
+		(*(list + i))->id = i;
+		i++;
+	}
+	// exit(1);
+	i = 0;
 	while(i < philo)
 	{
-		pthread_create(&(t1[i]), NULL, &ft, &list);
+		printf("##### %d #######\n", i);
+		pthread_create(&(t1[i]), NULL, &ft, list[i]);
 	    i++;
 	}
 	// usleep(2000000);
