@@ -18,6 +18,14 @@ void *f()
 }
 // int main()
 // {
+// 	struct timeval tv;
+// 	gettimeofday(&tv, NULL);
+// 	printf("s:%ld\n", tv.tv_sec);
+// 	printf("ms:%d\n", tv.tv_usec);
+// }
+
+// int main()
+// {
 //     pthread_t t1;
 //     pthread_t t2;
 // 	pthread_mutex_init(&mutex, NULL);

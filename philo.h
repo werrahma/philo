@@ -6,7 +6,7 @@
 /*   By: werrahma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 12:29:41 by werrahma          #+#    #+#             */
-/*   Updated: 2023/03/30 01:10:42 by werrahma         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:53:41 by werrahma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
 #include <sys/time.h>
 typedef struct s_list
 {
-    pthread_mutex_t *lock;
-    pthread_mutex_t *right;
-    pthread_mutex_t *print;
+    int				a;
+    int             inc;
+    pthread_t		*philo;
+    pthread_mutex_t	*left;
+    pthread_mutex_t	*right;
+    pthread_mutex_t	*print;
     unsigned long	fork;
     unsigned long	t_die;
     unsigned long	t_eat;
