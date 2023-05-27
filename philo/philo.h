@@ -6,7 +6,7 @@
 /*   By: werrahma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 12:29:41 by werrahma          #+#    #+#             */
-/*   Updated: 2023/04/11 01:55:50 by werrahma         ###   ########.fr       */
+/*   Updated: 2023/04/16 23:46:24 by werrahma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ typedef struct s_list
 	pthread_mutex_t	*right;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*protect;
+	pthread_mutex_t	*lock;
 	unsigned long	t_create;
+	unsigned long	t_start;
 	int				num_philo;
 	unsigned long	t_die;
 	unsigned long	t_eat;

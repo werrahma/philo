@@ -6,7 +6,7 @@
 /*   By: werrahma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:30:37 by werrahma          #+#    #+#             */
-/*   Updated: 2023/04/11 16:06:28 by werrahma         ###   ########.fr       */
+/*   Updated: 2023/04/17 01:35:13 by werrahma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	check_finish(t_list **list)
 	if (count == (*list)->num_philo)
 	{
 		pthread_mutex_lock((*list)->print);
-		printf("finish\n");
 		return (0);
 	}
 	return (1);
@@ -47,7 +46,7 @@ unsigned long	ft_gettimeofday(void)
 void	fake_usleep(unsigned long new_time, unsigned long time_sleeping)
 {
 	while (ft_gettimeofday() - new_time < time_sleeping)
-		usleep(10);
+		usleep(100);
 }
 
 int	check_die(unsigned long eating, t_list *list)
@@ -55,7 +54,8 @@ int	check_die(unsigned long eating, t_list *list)
 	if (list->t_die <= eating)
 	{
 		pthread_mutex_lock(list->print);
-		printf("time %lu philo %lu died\n", list->t_die, list->id + 1);
+		printf("time %lu philo %lu died\n",
+			ft_gettimeofday() - list->t_create, list->id + 1);
 		return (0);
 	}
 	return (1);
@@ -64,7 +64,7 @@ int	check_die(unsigned long eating, t_list *list)
 void	print_msg(char *str, t_list *list)
 {
 	pthread_mutex_lock(list->print);
-	printf("time %lu\t%lu \t %s\n", ft_gettimeofday() - list->t_create,
+	printf("time %lu %lu  %s\n", ft_gettimeofday() - list->t_create,
 		list->id + 1, str);
 	pthread_mutex_unlock(list->print);
 }

@@ -6,7 +6,7 @@
 /*   By: werrahma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:58:51 by werrahma          #+#    #+#             */
-/*   Updated: 2023/04/11 01:48:58 by werrahma         ###   ########.fr       */
+/*   Updated: 2023/04/17 00:09:13 by werrahma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	ft_atoi(const	char *str)
 	while (str[a] >= '0' && str[a] <= '9')
 	{
 		ress = ress * 10 + str[a++] - '0';
-		if (ress > __LONG_MAX__ && sign == 1)
+		if (ress > 2147483647 && sign == 1)
 			return (-1);
-		else if (ress > __LONG_MAX__ && sign == -1)
-			return (0);
+		else if (ress > 2147483648 && sign == -1)
+			return (-1);
 	}
 	return (((int)ress * sign));
 }

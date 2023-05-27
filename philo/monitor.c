@@ -6,7 +6,7 @@
 /*   By: werrahma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 00:38:16 by werrahma          #+#    #+#             */
-/*   Updated: 2023/04/11 01:41:46 by werrahma         ###   ########.fr       */
+/*   Updated: 2023/04/17 00:11:43 by werrahma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int	handling_errors(int ac, char **av)
 	while (av[i])
 	{
 		j = 0;
+		if (av[i][0] == '+')
+			j++;
 		while (av[i][j])
 		{
-			if (((av[1][0] == '0') && av[1][1] == '\0') || av[j][0] == '\0')
+			if (ft_atoi(av[i]) == 0 || ft_atoi(av[i]) == -1)
 				return (0);
-			if (av[i][0] == '+')
-				j++;
-			if (av[i][j] == '-' || av[i][j + 1] == '+')
+			if (av[i][j] == '-' || av[i][j] == '+')
 				return (0);
 			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
 				return (0);
@@ -87,6 +87,7 @@ void	init_all(t_list **list)
 		list[i]->check = 0;
 		list[i]->eating = 0;
 		list[i]->eating = ft_gettimeofday();
+		list[i]->t_start = ft_gettimeofday();
 		pthread_mutex_init(list[i]->left, NULL);
 		i++;
 	}

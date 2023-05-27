@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: werrahma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 20:22:53 by werrahma          #+#    #+#             */
-/*   Updated: 2023/04/11 01:43:20 by werrahma         ###   ########.fr       */
+/*   Updated: 2023/04/17 01:35:21 by werrahma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,24 @@ void	*philosopher_action(void *lst)
 	t_list	*list;
 
 	list = (t_list *)lst;
-	pthread_mutex_lock(list->print);
-	list->t_create = ft_gettimeofday();
-	pthread_mutex_unlock(list->print);
+	list->t_create = list->t_start;
 	while (1)
 	{
 		pthread_mutex_lock(list->left);
-		print_msg("Has Taken a fork", list);
+		print_msg("has taken a fork", list);
 		pthread_mutex_lock(list->right);
-		print_msg("Has Taken a fork", list);
+		print_msg("has taken a fork", list);
+		pthread_mutex_lock(list->print);
 		list->check++;
-		print_msg("is Eating", list);
+		pthread_mutex_unlock(list->print);
+		print_msg("is eating", list);
 		pthread_mutex_lock(list->protect);
 		list->eating = ft_gettimeofday();
 		pthread_mutex_unlock(list->protect);
 		fake_usleep(ft_gettimeofday(), list->t_eat);
 		pthread_mutex_unlock(list->left);
 		pthread_mutex_unlock(list->right);
-		print_msg("is Sleeping", list);
+		print_msg("is sleeping", list);
 		fake_usleep(ft_gettimeofday(), list->t_sleep);
 		print_msg("is thinking", list);
 	}
